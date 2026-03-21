@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>POC</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style>
+        /* Style the dialog box */
+        dialog {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Style the backdrop overlay */
+        dialog::backdrop {
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+    </style>
+    
+</head>
+<body>
+    <!-- Button to open the dialog -->
+    <button id="openDialogButton">Open Form Dialog</button>
+
+    <!-- The custom dialog box -->
+    <dialog id="formDialog">
+        <h2>Login</h2>
+        <form method="dialog" id="loginForm">
+            <label for="email"><b>Email</b></label>
+            <input type="text" placeholder="Enter Email" name="email" required>
+            
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+            
+            <button type="submit">Login</button>
+            <button type="button" id="cancelButton">Cancel</button>
+        </form>
+    </dialog>
+    <script>
+        const dialog = document.getElementById('formDialog');
+        const openButton = document.getElementById('openDialogButton');
+        const cancelButton = document.getElementById('cancelButton');
+        const loginForm = document.getElementById('loginForm');
+
+        // Open the dialog
+        openButton.addEventListener('click', () => {
+            dialog.showModal(); // Opens as a modal with a backdrop
+        });
+
+        // Close the dialog with the cancel button
+        cancelButton.addEventListener('click', () => {
+            dialog.close();
+        });
+
+        // Optional: Handle form submission
+        loginForm.addEventListener('submit', (event) => {
+        // You can add logic here to process the form data (e.g., via fetch API)
+        console.log('Form submitted!');
+        // The dialog closes automatically due to form method="dialog"
+        });
+
+    </script>
+</body>
+</html>

@@ -5,6 +5,19 @@
         <meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <title>Todo App</title>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <style>
+            dialog {
+                padding: 20px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+
+            /* Style the backdrop overlay */
+            dialog::backdrop {
+                background-color: rgba(0, 0, 0, 0.4);
+            }
+        </style>
         <script>
             // JavaScript code execution place
 
@@ -15,29 +28,31 @@
             function onAddTodo()
             {
                 console.log("Add a todo clicked!")
-                let inputText = document.getElementById("addTodoInput").value
-                if(!inputText)
-                {
-                    alert("Todo cannot be blank at all!")
-                }
-                else
-                {
-                    console.log("Input Text: ", inputText)
-                    todoList.push({
-                        todoTitle: inputText,
-                        todoDescription:"",
-                        todoDueDate: "",
-                        todoPriority:"",
-                        todoID: ++count,
-                        todoCompletionStatus: false,
-                        todoStatus: "Todo",
-                        todoCreationDate: "",
-                        todoUpdationDate: ""
-                    })
-                    console.log("Todo List: ", todoList)
-                    document.getElementById("addTodoInput").value = ""
-                    listAllTodos()
-                }
+                let dialog = document.getElementById("addTodoID")
+                dialog.showModal()
+                // let inputText = document.getElementById("addTodoInput").value
+                // if(!inputText)
+                // {
+                //     alert("Todo cannot be blank at all!")
+                // }
+                // else
+                // {
+                //     console.log("Input Text: ", inputText)
+                //     todoList.push({
+                //         todoTitle: inputText,
+                //         todoDescription:"",
+                //         todoDueDate: "",
+                //         todoPriority:"",
+                //         todoID: ++count,
+                //         todoCompletionStatus: false,
+                //         todoStatus: "Todo",
+                //         todoCreationDate: "",
+                //         todoUpdationDate: ""
+                //     })
+                //     console.log("Todo List: ", todoList)
+                //     document.getElementById("addTodoInput").value = ""
+                //     listAllTodos()
+                // }
             }
 
             function listAllTodos()
@@ -47,7 +62,7 @@
                 list.innerHTML = ""
                 for(let count = 0; count<todoList.length; count++)
                 {
-                    list.innerHTML = list.innerHTML + "<li>"+todoList[count].todoTitle+"</li>"
+                    list.innerHTML = list.innerHTML + "<li>  <input type='checkbox'> "+todoList[count].todoTitle+"</li>"
                 }
             }
 
@@ -55,15 +70,51 @@
     </head>
     <body>
         <h1>Todo App</h1><br>
-        <input id="addTodoInput" placeholder="Enter todo Title here..."/>
+        <!-- <input id="addTodoInput" placeholder="Enter todo Title here..."/> -->
         <br>
         <button onclick="onAddTodo()">Add Todo</button>
         <br>
         <ul id="todoListHTML" style="list-style-type: none;">
             <label id="noTodoLabel" style="display: none;">No ToDos added yet</label>
-            <!-- <li>Abc</li>
-            <li>Def</li> -->
+            <!-- <li> <input type="checkbox"> Abc</li> -->
+            <!-- <li>Def</li> -->
         </ul>
+        <!--Creation date
+            Updation date -->
+        <dialog id="addTodoID" style="width: 50%;">
+            <h2 style="text-align: center;">Add Todo</h2>
+            <br>
+            <form style="text-align: center;">
+                <label>Todo Title</label>
+                <input type="text" placeholder="Enter Todo Title..." id="addTodoInput"><br><br>
+
+                <label>Todo Description</label>
+                <input type="text" placeholder="Enter Todo Description..." id="addTodoDescription"><br><br>
+
+                <label>Todo Due Date</label>
+                <input type="date" placeholder="dd/mm/yyyy" id="addTodoDueDate"><br><br>
+
+                <label>Todo Priority</label>
+                <select>
+                    <option>High</option>
+                    <option>Medium</option>
+                    <option>Low</option>
+                </select><br><br>
+
+                <input type="checkbox"> 
+                <label>Completed</label><br><br>
+
+                <label>Todo Status</label>
+                <select>
+                    <option>To do</option>
+                    <option>In Progress</option>
+                    <option>In Review</option>
+                    <option>Done</option>
+                </select><br><br>
+
+            </form>
+        </dialog>
+
         <script>
             let noTodoLabel = document.getElementById("noTodoLabel")
             if(todoList.length == 0)
