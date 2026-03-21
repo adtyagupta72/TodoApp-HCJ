@@ -36,8 +36,21 @@
                     })
                     console.log("Todo List: ", todoList)
                     document.getElementById("addTodoInput").value = ""
+                    listAllTodos()
                 }
             }
+
+            function listAllTodos()
+            {
+                console.log("listAllTodos called!")
+                let list = document.getElementById("todoListHTML")
+                list.innerHTML = ""
+                for(let count = 0; count<todoList.length; count++)
+                {
+                    list.innerHTML = list.innerHTML + "<li>"+todoList[count].todoTitle+"</li>"
+                }
+            }
+
         </script>
     </head>
     <body>
@@ -46,9 +59,17 @@
         <br>
         <button onclick="onAddTodo()">Add Todo</button>
         <br>
-        <ul>
-            <li>Abc</li>
-            <li>Def</li>
+        <ul id="todoListHTML" style="list-style-type: none;">
+            <label id="noTodoLabel" style="display: none;">No ToDos added yet</label>
+            <!-- <li>Abc</li>
+            <li>Def</li> -->
         </ul>
+        <script>
+            let noTodoLabel = document.getElementById("noTodoLabel")
+            if(todoList.length == 0)
+            {
+                noTodoLabel.style = ""
+            }
+        </script>
     </body>
 </html>
