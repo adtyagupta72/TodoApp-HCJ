@@ -7,10 +7,36 @@
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <script>
             // JavaScript code execution place
+
+            let todoList = []
+            var count = 0
+
             console.log("Hello Todo App!")
             function onAddTodo()
             {
                 console.log("Add a todo clicked!")
+                let inputText = document.getElementById("addTodoInput").value
+                if(!inputText)
+                {
+                    alert("Todo cannot be blank at all!")
+                }
+                else
+                {
+                    console.log("Input Text: ", inputText)
+                    todoList.push({
+                        todoTitle: inputText,
+                        todoDescription:"",
+                        todoDueDate: "",
+                        todoPriority:"",
+                        todoID: ++count,
+                        todoCompletionStatus: false,
+                        todoStatus: "Todo",
+                        todoCreationDate: "",
+                        todoUpdationDate: ""
+                    })
+                    console.log("Todo List: ", todoList)
+                    document.getElementById("addTodoInput").value = ""
+                }
             }
         </script>
     </head>
@@ -20,5 +46,9 @@
         <br>
         <button onclick="onAddTodo()">Add Todo</button>
         <br>
+        <ul>
+            <li>Abc</li>
+            <li>Def</li>
+        </ul>
     </body>
 </html>
