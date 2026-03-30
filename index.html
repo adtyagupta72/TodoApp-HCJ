@@ -25,34 +25,52 @@
             var count = 0
 
             console.log("Hello Todo App!")
+
+            function openAddTodoDialog()
+            {
+                let dialog = document.getElementById("addTodoID")
+                dialog.showModal()
+            }
+
+            function closeAddTodoDialog()
+            {
+                let dialog = document.getElementById("addTodoID")
+                dialog.close()
+            }
+
             function onAddTodo()
             {
                 console.log("Add a todo clicked!")
-                let dialog = document.getElementById("addTodoID")
-                dialog.showModal()
-                // let inputText = document.getElementById("addTodoInput").value
-                // if(!inputText)
-                // {
-                //     alert("Todo cannot be blank at all!")
-                // }
-                // else
-                // {
-                //     console.log("Input Text: ", inputText)
-                //     todoList.push({
-                //         todoTitle: inputText,
-                //         todoDescription:"",
-                //         todoDueDate: "",
-                //         todoPriority:"",
-                //         todoID: ++count,
-                //         todoCompletionStatus: false,
-                //         todoStatus: "Todo",
-                //         todoCreationDate: "",
-                //         todoUpdationDate: ""
-                //     })
-                //     console.log("Todo List: ", todoList)
-                //     document.getElementById("addTodoInput").value = ""
-                //     listAllTodos()
-                // }
+                
+                let inputText = document.getElementById("addTodoInput").value
+                let addTodoDescription = document.getElementById("addTodoDescription").value
+                let addTodoDueDate = document.getElementById("addTodoDueDate").value
+                let addTodoPriority = document.getElementById("addTodoPriority").value
+                let addTodoCompleteID = document.getElementById("addTodoCompleteID").value
+                let addTodoStatusID = document.getElementById("addTodoStatusID").value
+                if(!inputText || !addTodoDescription || !addTodoDueDate || !addTodoCompleteID)
+                {
+                    alert("Any Field cannot be blank at all!")
+                }
+                else
+                {
+                    console.log("Input Text: ", inputText)
+                    todoList.push({
+                        todoTitle: inputText,
+                        todoDescription:addTodoDescription,
+                        todoDueDate: addTodoDueDate,
+                        todoPriority:addTodoPriority,
+                        todoID: ++count,
+                        todoCompletionStatus: addTodoCompleteID,
+                        todoStatus: addTodoStatusID,
+                        todoCreationDate: Date.now(),
+                        todoUpdationDate: Date.now()
+                    })
+                    console.log("Todo List: ", todoList)
+                    document.getElementById("addTodoInput").value = ""
+                    listAllTodos()
+                    closeAddTodoDialog()
+                }
             }
 
             function listAllTodos()
@@ -72,7 +90,7 @@
         <h1>Todo App</h1><br>
         <!-- <input id="addTodoInput" placeholder="Enter todo Title here..."/> -->
         <br>
-        <button onclick="onAddTodo()">Add Todo</button>
+        <button onclick="openAddTodoDialog()">Add Todo</button>
         <br>
         <ul id="todoListHTML" style="list-style-type: none;">
             <label id="noTodoLabel" style="display: none;">No ToDos added yet</label>
@@ -84,34 +102,35 @@
         <dialog id="addTodoID" style="width: 50%;">
             <h2 style="text-align: center;">Add Todo</h2>
             <br>
-            <form style="text-align: center;">
+            <form id="addTodoFormID" style="text-align: center;">
                 <label>Todo Title</label>
-                <input type="text" placeholder="Enter Todo Title..." id="addTodoInput"><br><br>
+                <input type="text" placeholder="Enter Todo Title..." id="addTodoInput" required><br><br>
 
                 <label>Todo Description</label>
-                <input type="text" placeholder="Enter Todo Description..." id="addTodoDescription"><br><br>
+                <input type="text" placeholder="Enter Todo Description..." id="addTodoDescription" required><br><br>
 
                 <label>Todo Due Date</label>
-                <input type="date" placeholder="dd/mm/yyyy" id="addTodoDueDate"><br><br>
+                <input type="date" placeholder="dd/mm/yyyy" id="addTodoDueDate" required><br><br>
 
                 <label>Todo Priority</label>
-                <select>
+                <select required id="addTodoPriority">
                     <option>High</option>
                     <option>Medium</option>
                     <option>Low</option>
                 </select><br><br>
 
-                <input type="checkbox"> 
+                <input type="checkbox" id="addTodoCompleteID"> 
                 <label>Completed</label><br><br>
 
                 <label>Todo Status</label>
-                <select>
+                <select required id="addTodoStatusID">
                     <option>To do</option>
                     <option>In Progress</option>
                     <option>In Review</option>
                     <option>Done</option>
                 </select><br><br>
 
+                <input type="submit" value="Add Todo"/>
             </form>
         </dialog>
 
@@ -121,6 +140,16 @@
             {
                 noTodoLabel.style = ""
             }
+
+            let addTodoFormID = document.getElementById("addTodoFormID")
+
+            addTodoFormID.addEventListener("submit", function (event)
+            {
+                event.preventDefault()
+                console.log("The form is submitted now!!")
+                onAddTodo()
+            });
+
         </script>
     </body>
 </html>
