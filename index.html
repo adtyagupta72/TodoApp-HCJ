@@ -38,6 +38,18 @@
                 dialog.close()
             }
 
+            function openEditTodoDialog()
+            {
+                let dialog = document.getElementById("editTodoID")
+                dialog.showModal()
+            }
+
+            function closeEditTodoDialog()
+            {
+                let dialog = document.getElementById("editTodoID")
+                dialog.close()
+            }
+
             function onAddTodo()
             {
                 console.log("Add a todo clicked!")
@@ -80,8 +92,27 @@
                 list.innerHTML = ""
                 for(let count = 0; count<todoList.length; count++)
                 {
-                    list.innerHTML = list.innerHTML + "<li>  <input type='checkbox'> "+todoList[count].todoTitle+"</li>"
+                    list.innerHTML = list.innerHTML + "<li onclick='openEditTodoDialog()'> <div style='display: flex;'><input type='checkbox'> <div style='margin-left: 10px;'> "+todoList[count].todoTitle+"<br> "+todoList[count].todoDescription+" </div> </div> </li>"
+                    // list.innerHTML = list.innerHTML + "<li>  <input type='checkbox'> "+todoList[count].todoTitle+"</li>"
                 }
+            }
+
+            function addTestTodo()
+            {
+                let tempCount = 0
+                todoList.push({
+                    todoTitle: "Todo for test "+(++tempCount),
+                    todoDescription:"Description comes here",
+                    todoDueDate: "03/04/2026",
+                    todoPriority:"High",
+                    todoID: ++count,
+                    todoCompletionStatus: false,
+                    todoStatus: "Todo",
+                    todoCreationDate: Date.now(),
+                    todoUpdationDate: Date.now()
+                })
+                console.log("Todo List: ", todoList)
+                listAllTodos()
             }
 
         </script>
@@ -92,9 +123,19 @@
         <br>
         <button onclick="openAddTodoDialog()">Add Todo</button>
         <br>
+        <button onclick="addTestTodo()">Add Dummy Todos</button>
+        <br>
         <ul id="todoListHTML" style="list-style-type: none;">
             <label id="noTodoLabel" style="display: none;">No ToDos added yet</label>
-            <!-- <li> <input type="checkbox"> Abc</li> -->
+            <!-- <li> 
+                <div style="display: flex;">
+                    <input type="checkbox"> 
+                    <div style="margin-left: 10px;">
+                        Abc<br>
+                        Description comes here
+                    </div>
+                </div>
+            </li> -->
             <!-- <li>Def</li> -->
         </ul>
         <!--Creation date
@@ -131,6 +172,41 @@
                 </select><br><br>
 
                 <input type="submit" value="Add Todo"/>
+            </form>
+        </dialog>
+
+        <dialog id="editTodoID" style="width: 50%;">
+            <h2 style="text-align: center;">Edit Todo</h2>
+            <br>
+            <form id="editTodoFormID" style="text-align: center;">
+                <label>Todo Title</label>
+                <input type="text" placeholder="Enter Todo Title..." id="editTodoInput" required><br><br>
+
+                <label>Todo Description</label>
+                <input type="text" placeholder="Enter Todo Description..." id="editTodoDescription" required><br><br>
+
+                <label>Todo Due Date</label>
+                <input type="date" placeholder="dd/mm/yyyy" id="editTodoDueDate" required><br><br>
+
+                <label>Todo Priority</label>
+                <select required id="editTodoPriority">
+                    <option>High</option>
+                    <option>Medium</option>
+                    <option>Low</option>
+                </select><br><br>
+
+                <input type="checkbox" id="editTodoCompleteID"> 
+                <label>Completed</label><br><br>
+
+                <label>Todo Status</label>
+                <select required id="editTodoStatusID">
+                    <option>To do</option>
+                    <option>In Progress</option>
+                    <option>In Review</option>
+                    <option>Done</option>
+                </select><br><br>
+
+                <input type="submit" value="Update Todo"/>
             </form>
         </dialog>
 
