@@ -5,117 +5,8 @@
         <meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <title>Todo App</title>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
-        <style>
-            dialog {
-                padding: 20px;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            }
-
-            /* Style the backdrop overlay */
-            dialog::backdrop {
-                background-color: rgba(0, 0, 0, 0.4);
-            }
-        </style>
-        <script>
-            // JavaScript code execution place
-
-            let todoList = []
-            var count = 0
-
-            console.log("Hello Todo App!")
-
-            function openAddTodoDialog()
-            {
-                let dialog = document.getElementById("addTodoID")
-                dialog.showModal()
-            }
-
-            function closeAddTodoDialog()
-            {
-                let dialog = document.getElementById("addTodoID")
-                dialog.close()
-            }
-
-            function openEditTodoDialog()
-            {
-                let dialog = document.getElementById("editTodoID")
-                dialog.showModal()
-            }
-
-            function closeEditTodoDialog()
-            {
-                let dialog = document.getElementById("editTodoID")
-                dialog.close()
-            }
-
-            function onAddTodo()
-            {
-                console.log("Add a todo clicked!")
-                
-                let inputText = document.getElementById("addTodoInput").value
-                let addTodoDescription = document.getElementById("addTodoDescription").value
-                let addTodoDueDate = document.getElementById("addTodoDueDate").value
-                let addTodoPriority = document.getElementById("addTodoPriority").value
-                let addTodoCompleteID = document.getElementById("addTodoCompleteID").value
-                let addTodoStatusID = document.getElementById("addTodoStatusID").value
-                if(!inputText || !addTodoDescription || !addTodoDueDate || !addTodoCompleteID)
-                {
-                    alert("Any Field cannot be blank at all!")
-                }
-                else
-                {
-                    console.log("Input Text: ", inputText)
-                    todoList.push({
-                        todoTitle: inputText,
-                        todoDescription:addTodoDescription,
-                        todoDueDate: addTodoDueDate,
-                        todoPriority:addTodoPriority,
-                        todoID: ++count,
-                        todoCompletionStatus: addTodoCompleteID,
-                        todoStatus: addTodoStatusID,
-                        todoCreationDate: Date.now(),
-                        todoUpdationDate: Date.now()
-                    })
-                    console.log("Todo List: ", todoList)
-                    document.getElementById("addTodoInput").value = ""
-                    listAllTodos()
-                    closeAddTodoDialog()
-                }
-            }
-
-            function listAllTodos()
-            {
-                console.log("listAllTodos called!")
-                let list = document.getElementById("todoListHTML")
-                list.innerHTML = ""
-                for(let count = 0; count<todoList.length; count++)
-                {
-                    list.innerHTML = list.innerHTML + "<li onclick='openEditTodoDialog()'> <div style='display: flex;'><input type='checkbox'> <div style='margin-left: 10px;'> "+todoList[count].todoTitle+"<br> "+todoList[count].todoDescription+" </div> </div> </li>"
-                    // list.innerHTML = list.innerHTML + "<li>  <input type='checkbox'> "+todoList[count].todoTitle+"</li>"
-                }
-            }
-
-            function addTestTodo()
-            {
-                let tempCount = 0
-                todoList.push({
-                    todoTitle: "Todo for test "+(++tempCount),
-                    todoDescription:"Description comes here",
-                    todoDueDate: "03/04/2026",
-                    todoPriority:"High",
-                    todoID: ++count,
-                    todoCompletionStatus: false,
-                    todoStatus: "Todo",
-                    todoCreationDate: Date.now(),
-                    todoUpdationDate: Date.now()
-                })
-                console.log("Todo List: ", todoList)
-                listAllTodos()
-            }
-
-        </script>
+        <link rel="stylesheet" href="index.css">
+        <script src="index.js"></script>
     </head>
     <body>
         <h1>Todo App</h1><br>
@@ -138,9 +29,7 @@
             </li> -->
             <!-- <li>Def</li> -->
         </ul>
-        <!--Creation date
-            Updation date -->
-        <dialog id="addTodoID" style="width: 50%;">
+        <dialog id="addTodoID" class="dialogCloseClass" style="width: 50%;" popover="auto">
             <h2 style="text-align: center;">Add Todo</h2>
             <br>
             <form id="addTodoFormID" style="text-align: center;">
@@ -175,7 +64,7 @@
             </form>
         </dialog>
 
-        <dialog id="editTodoID" style="width: 50%;">
+        <dialog id="editTodoID" class="dialogCloseClass" style="width: 50%;">
             <h2 style="text-align: center;">Edit Todo</h2>
             <br>
             <form id="editTodoFormID" style="text-align: center;">
@@ -209,23 +98,6 @@
                 <input type="submit" value="Update Todo"/>
             </form>
         </dialog>
-
-        <script>
-            let noTodoLabel = document.getElementById("noTodoLabel")
-            if(todoList.length == 0)
-            {
-                noTodoLabel.style = ""
-            }
-
-            let addTodoFormID = document.getElementById("addTodoFormID")
-
-            addTodoFormID.addEventListener("submit", function (event)
-            {
-                event.preventDefault()
-                console.log("The form is submitted now!!")
-                onAddTodo()
-            });
-
-        </script>
+        <script src="index-last.js"></script>
     </body>
 </html>
