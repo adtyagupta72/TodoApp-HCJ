@@ -3,10 +3,10 @@ var count = 0
 
 console.log("Hello Todo App!")
 
-function openAddTodoDialog()
-{
-    dialog.showModal()
-}
+// function openAddTodoDialog()
+// {
+//     dialog.showModal()
+// }
 
 function closeAddTodoDialog()
 {

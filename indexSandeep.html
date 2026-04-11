@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO App</title>
+    <script>
+        console.log("Hello TODO APP")
+        let todoList = []
+        let count = 0
+        
+        function addDummyTodos()
+        {
+            // let testCount = 0
+
+            todoList.push({
+                    todoTitle: "Dummy ToDO"+count,
+                     todoDescription: "dummy Todo description",
+                    todoDueDate: "Due date",
+                    todoPriority: "Low",
+                    todoID: ++count,
+                    todoCompletionStatus: false,
+                    todoStatus: "Todo",
+                    todoCreationDate: Date.now(),
+                    todoUpdationDate: Date.now()
+                })
+        }
+       
+        function addTODO(e) {
+            e.preventDefault()
+            console.log("Add to do called");
+            
+            const inputValue = document.getElementById("addToDoinput").value.trim()
+            const completionStatus = document.getElementById("todocompletionStatus").checked
+            const description = document.getElementById("addToDoDescription").value
+            const dueDate = document.getElementById("addToDoDueDAte").value
+            const priority = document.getElementById("todoPriority").value
+            const todostatus = document.getElementById("todoStatus").value 
+            
+
+            if (!inputValue) {
+                alert("Todo cannot be blank")
+                return
+            }
+            todoList.push({
+                todoTitle: inputValue,
+                todoDescription: description,
+                todoDueDate: dueDate,
+                todoPriority: priority,
+                todoID: ++count,
+                todoCompletionStatus: completionStatus,
+                todoStatus: todostatus,
+                todoCreationDate: Date.now(),
+                todoUpdationDate: Date.now()
+            })
+            console.log("TodoList: ", todoList)
+            document.getElementById("addToDoinput").value = ""
+            document.getElementById("todocompletionStatus").checked = false
+            listAllTodos()
+            document.getElementById('addToDoID').close();
+        }
+
+        function listAllTodos() {
+            let list = document.getElementById("todoListHtml")
+            let noTodoLabel = document.getElementById("notodoLabel")
+            list.innerHTML = ""
+            if (todoList.length === 0) {
+                noTodoLabel.style.display = "block"
+                return
+            }
+            noTodoLabel.style.display = "none"
+            for (let i = 0; i < todoList.length; i++) {
+                list.innerHTML += "<li onclick='ShowEditToDoDailog("+todoList[i].todoID+")'>  <div style='display: flex;'> <input type='checkbox'> <div style='margin-left: 10px;'> " + todoList[i].todoTitle + "<br> " + todoList[i].todoDescription + "  </div> </div> </li>"
+            }
+        }
+
+        function ShowEditToDoDailog(id)
+        {
+            console.log("Edit todo called with ID: ", id)
+            let dialog = document.getElementById("editToDoID")
+            dialog.showModal()
+            let todo = todoList.find (todoTemp => 
+                {
+                    return todoTemp.todoID == id
+                }
+            ) 
+            console.log("Updating Todo",todo);
+            document.getElementById("editToDoinput").value = todo.todoTitle
+            
+        }
+        function hideEditToDoDailog()
+        {
+            let dialog = document.getElementById("editToDoID")
+            dialog.close()
+        }
+        function showAddTODODailog()
+        {
+            let dialog = document.getElementById("addToDoID")
+            dialog.showModal()
+        }
+        function hideAddTODODailog()
+        {
+            let dialog = document.getElementById("addToDoID")
+            dialog.close()
+        }
+        function updateTodo()
+        {
+            console.log("Update todo called")
+        }
+    </script>
+</head>
+
+<body>
+    <h1>ToDo App</h1>
+    <button id="addToDoBtn" onclick="showAddTODODailog()">Add TODO</button>
+    <dialog id="addToDoID" style="width: 30%;">
+        <h2>Add ToDo</h2>
+        <form id="addtodoDataForm" onsubmit="addTODO(event)">
+            <label >ToDo Title</label><br>
+            <input type="text" placeholder="Enter ToDo Title ...." id="addToDoinput" ><br>
+            <label>ToDo Description</label><br>
+            <input type="text" placeholder="Enter ToDo Description ...." id="addToDoDescription" ><br>
+            <label>ToDo Due Date</label><br>
+            <input type="date" placeholder="Enter ToDo Due Date ...." id="addToDoDueDAte" ><br>
+            <label for="">ToDo Priority</label><br>
+            <select id="todoPriority" >
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+            </select><br><br>
+            <input id="todocompletionStatus" type="checkbox" >
+            <label >Completed</label><br>
+
+            <label >
+                ToDo Status
+            </label>
+            <select id="todoStatus" >
+                <option>To Do</option>
+                <option>In Progress</option>
+                <option>IN Review</option>
+                <option>Done</option>
+            </select><br>
+            <input type="submit" value="Add todo">
+            <!-- <button type="submit" onclick="addTODO(); ">Add ToDo</button> -->
+            <button type="button" onclick="hideAddTODODailog()">Cancel</button><br>
+            
+        </form><br>
+        
+    </dialog>
+    <dialog id="editToDoID" style="width: 30%;">
+        <h2>Edit ToDo</h2>
+        <form  >
+            <label >ToDo Title</label><br>
+            <input type="text" placeholder="Enter ToDo Title ...." id="editToDoinput" /><br>
+            <label>ToDo Description</label><br>
+            <input type="text" placeholder="Enter ToDo Description ...." id="editToDoDescription" /><br>
+            <label>ToDo Due Date</label><br>
+            <input type="date" placeholder="Enter ToDo Due Date ...." id="editToDoDueDate" /><br>
+            <label >ToDo Priority</label><br>
+            <select id="edittodoPriority" >
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+            </select><br><br>
+            <input id="edittodocompletionStatus" type="checkbox" />
+            <label >Completed</label><br>
+
+            <label >
+                ToDo Status
+            </label>
+            <select id="edittodoStatus" >
+                <option>To Do</option>
+                <option>In Progress</option>
+                <option>IN Review</option>
+                <option>Done</option>
+            </select><br>
+            <button type="button" onclick="updateTodo()">Update todo</button>
+            <!-- <button type="submit" onclick="addTODO(); ">Add ToDo</button> -->
+            <button type="button" onclick="hideEditToDoDailog()">Cancel</button><br>
+        </form><br>
+        
+    </dialog>
+    <ul id="todoListHtml" style="list-style-type: none;">
+        <label id="notodoLabel">No todos are added yet</label>
+        <!-- <li>
+            <div style="display: flex;">
+                <input type="checkbox">
+                <div style="margin-left: 10px;">
+                    ABC<br>
+                    Description is here
+                </div>
+            </div>
+        </li> -->
+    </ul>
+    <!-- <button id="todoDetailsbtn">Details</button> -->
+    <!-- <dialog id="todoDetails" style="width: 30%;">
+        <h2>ToDo Details</h2>
+        
+        
+    </dialog> -->
+    <script>
+    
+        addDummyTodos()
+        addDummyTodos()
+        addDummyTodos()
+        listAllTodos()
+    </script> 
+</body>
+
+</html>
